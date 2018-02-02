@@ -4,7 +4,7 @@
 #
 Name     : noto-cjk
 Version  : 2017.06.01.serif.cjk.1.1
-Release  : 3
+Release  : 4
 URL      : http://localhost/cgit/projects/noto-cjk/snapshot/noto-cjk-2017-06-01-serif-cjk-1-1.tar.bz2
 Source0  : http://localhost/cgit/projects/noto-cjk/snapshot/noto-cjk-2017-06-01-serif-cjk-1-1.tar.bz2
 Summary  : No detailed summary available

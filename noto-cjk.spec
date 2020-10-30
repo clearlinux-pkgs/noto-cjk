@@ -4,13 +4,14 @@
 #
 Name     : noto-cjk
 Version  : 2017.06.01.serif.cjk.1.1
-Release  : 6
+Release  : 7
 URL      : http://localhost/cgit/projects/noto-cjk/snapshot/noto-cjk-2017-06-01-serif-cjk-1-1.tar.bz2
 Source0  : http://localhost/cgit/projects/noto-cjk/snapshot/noto-cjk-2017-06-01-serif-cjk-1-1.tar.bz2
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : OFL-1.1
-Requires: noto-cjk-data
+Requires: noto-cjk-data = %{version}-%{release}
+Requires: noto-cjk-license = %{version}-%{release}
 
 %description
 URL: http://noto.googlecode.com/
@@ -26,20 +27,40 @@ Group: Data
 data components for the noto-cjk package.
 
 
+%package license
+Summary: license components for the noto-cjk package.
+Group: Default
+
+%description license
+license components for the noto-cjk package.
+
+
 %prep
 %setup -q -n noto-cjk-2017-06-01-serif-cjk-1-1
+cd %{_builddir}/noto-cjk-2017-06-01-serif-cjk-1-1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1510693488
-make V=1  %{?_smp_mflags}
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604100163
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+make  %{?_smp_mflags}
+
 
 %install
-export SOURCE_DATE_EPOCH=1510693488
+export SOURCE_DATE_EPOCH=1604100163
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/noto-cjk
+cp %{_builddir}/noto-cjk-2017-06-01-serif-cjk-1-1/LICENSE %{buildroot}/usr/share/package-licenses/noto-cjk/ec660b17dff69058c2bbf122ca85ab83b920fce7
 %make_install
 
 %files
@@ -54,3 +75,7 @@ rm -rf %{buildroot}
 /usr/share/fonts/noto-cjk/NotoSansCJK-Medium.ttc
 /usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc
 /usr/share/fonts/noto-cjk/NotoSansCJK-Thin.ttc
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/noto-cjk/ec660b17dff69058c2bbf122ca85ab83b920fce7
